@@ -67,10 +67,14 @@
                 todolistBody.removeChild(todolistBody.firstChild);
             }
         }
+        //fungsi untuk menghapus data todo yang sudah selesai
+        function removeTodoList(index) {
+            todolist.splice(index, 1); //menghapus data todo yang sudah selesai
+            displayTodolist(); //memanggil fungsi displayTodolist untuk menampilkan data todo yang sudah dihapus
+        }
 
-        //minyimpan data todolist dalam  1  document
 
-        function addTodoList(todo) {
+        function addTodoList(index, todo) {
 
             const tr = document.createElement("tr"); //membuat elemen tr
             const tdButton = document.createElement("td");//membuat elemen td
@@ -81,7 +85,11 @@
             const buttonDone = document.createElement("input");
             buttonDone.type = "button";
             buttonDone.value = "Done";
+            buttonDone.onclick = function () {
+                removeTodoList(index);//memanggil fungsi removeTodoList untuk menghapus data todo yang sudah selesai
+            };
             tdButton.appendChild(buttonDone);
+
 
 
 
@@ -104,7 +112,7 @@
 
                 const searchText = document.getElementById("search").value.toLowerCase();
                 if (todo.toLowerCase().includes(searchText)) {
-                    addTodoList(todo); //menambahkan data todo ke dalam todolist atau memanggil fungsi addTodoList
+                    addTodoList(i, todo); //menambahkan data todo ke dalam todolist atau memanggil fungsi addTodoList
                 }
             }
         }
