@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web TodoList Dasar </title>
+    <link rel="icon" href="data:,">
+</head>
+
+<body>
+    <form name="todoForm">
+        <table>
+            <tbody>
+                <tr>
+                    <td><label for="todo">Todo:</label></td>
+                    <td><input type="text" id="todo" name="todo"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Add"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <h1>TodoList</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Filter:</th>
+                <th><input type="text" name="search" id="search"></th>
+            </tr>
+        </thead>
+        <tbody id="todolistBody">
+            <tr>
+                <td><input type="button" value="Done"></td>
+                <td> Todo Description </td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        const todolist = [
+
+            "Belajar HTML",
+            "Belajar CSS",
+            "Belajar JavaScript",
+            "Belajar PHP",
+            "Belajar MySQL",
+            "Belajar Laravel",
+            "Belajar Vue.js",
+            "Belajar React.js",
+            "Belajar Angular.js",
+            "Belajar Node.js",
+            "Belajar Express.js",
+            "Belajar MongoDB",
+            "Belajar Firebase",
+            "Belajar Git",
+            "Belajar GitHub",
+            "Belajar GitLab",
+        ];
+
+
+        function clearTodolist() {
+            const todolistBody = document.getElementById("todolistBody");
+            while (todolistBody.firstChild) {
+                todolistBody.removeChild(todolistBody.firstChild);
+            }
+        }
+
+        //minyimpan data todolist dalam  1  document
+
+        function addTodoList(todo) {
+
+            const tr = document.createElement("tr"); //membuat elemen tr
+            const tdButton = document.createElement("td");//membuat elemen td
+            tr.appendChild(tdButton);//menambahkan elemen td ke dalam elemen tr
+
+
+            //membuat elemen button add
+            const buttonDone = document.createElement("input");
+            buttonDone.type = "button";
+            buttonDone.value = "Done";
+            tdButton.appendChild(buttonDone);
+
+
+
+            const tdTodo = document.createElement("td");//membuat elemen td
+            tdTodo.textContent = todo;//mengisi elemen td dengan nilai todo
+            tr.appendChild(tdTodo);//menambahkan elemen td ke dalam elemen tr
+
+
+            const todolistBody = document.getElementById("todolistBody");//mengambil elemen dengan id todolistBody
+            todolistBody.appendChild(tr);//menambahkan elemen tr ke dalam elemen todolistBody
+        }
+
+
+        function displayTodolist() {
+            clearTodolist();
+
+
+            for (let i = 0; i < todolist.length; i++) {
+                const todo = todolist[i]; //melakukan data iterasi pada todolist  yang ada di array todolist 
+
+                const searchText = document.getElementById("search").value.toLowerCase();
+                if (todo.toLowerCase().includes(searchText)) {
+                    addTodoList(todo); //menambahkan data todo ke dalam todolist atau memanggil fungsi addTodoList
+                }
+            }
+        }
+
+        document.forms['todoForm'].onsubmit = function (event) {
+            event.preventDefault();
+
+
+            const todo = document.forms['todoForm']['todo'].value;
+            todolist.push(todo);
+
+            document.forms['todoForm'].reset();
+
+            console.info(todolist);
+        };
+
+        const searchInput = document.getElementById("search");
+        searchInput.onchange = function () {
+            console.info("On Change");
+        }
+        searchInput.onkayup = function () {
+            displayTodolist();
+        }
+
+        searchInput.onkeydown = function () {
+            displayTodolist();
+        }
+        displayTodolist();
+
+    </script>
+</body>
+
+</html>
